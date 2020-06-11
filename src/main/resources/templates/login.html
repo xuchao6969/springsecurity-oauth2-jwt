@@ -1,0 +1,73 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html" charset="UTF-8">
+    <link rel="shortcut icon" href="#"/>
+    <link th:src="@{/css/bootstrap.min.css}" rel="stylesheet" xmlns:th="http://www.w3.org/1999/xhtml"/>
+    <script type="text/javascript" th:src="@{/js/jquery.js}" xmlns:th="http://www.w3.org/1999/xhtml"></script>
+    <script th:src="@{/js/jquery.min.js}" type="text/javascript" xmlns:th="http://www.w3.org/1999/xhtml"></script>
+    <script th:src="@{/js/jquery.form.js}" type="text/javascript" xmlns:th="http://www.w3.org/1999/xhtml"></script>
+    <!--    <script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}" xmlns:th="http://www.w3.org/1999/xhtml"></script>-->
+    <title>Title</title>
+</head>
+<body>
+<h2>This is login page !</h2>
+<div class="main">
+    <form action="" method="post" id="formSub" autocomplete="off" onSubmit="return false">
+        用户:<input type="text" id="username" name="username" placeholder="请输入用户名"/><br/>
+        密码:<input type="text" id="password" name="password" placeholder="请输入密码"/><br/>
+        <button type="button" class="loginBtn" id="doLogin">登录</button>
+        <button type="button" class="btn blue" id="registss">注册</button>
+    </form>
+</div>
+</body>
+</html>
+<script type="text/javascript" th:inline="javascript" xmlns:th="http://www.w3.org/1999/xhtml">
+    $(function () {
+        $("#doLogin").click("click", function () {
+            doLogin();
+        })
+
+
+        // test(){
+        //     alert("ssss");
+        // }
+    });
+
+    // test = function(){
+    //     alert("ssss");
+    // }
+
+    function doLogin() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        console.log(username + "  " + password)
+        $("#formSub").ajaxSubmit({
+            url: "/sys/doLogin",
+            datatype: "json",
+            async: true,
+            success: function (data) {
+                if (1 == data) {
+                    alert("login success")
+                } else if (data == 0) {
+                    alert("user does not exist")
+                } else if (data == -1) {
+                    alert("password error")
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("保存失败！");
+                console.log("textStatus=" + textStatus);
+                console.log("jqXHR.status=" + jqXHR.status);
+                console.log("jqXHR.readyState=" + jqXHR.readyState);
+            }
+        })
+    }
+</script>
+<style>
+    .loginBtn {
+        background: #5cb85c;
+    }
+
+</style>

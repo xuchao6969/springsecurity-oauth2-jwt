@@ -1,0 +1,46 @@
+#SpringBoot服务端口配置
+server:
+  port: 8080
+
+spring:
+  #数据源配置
+  datasource:
+    name: jwt_demo
+    url: jdbc:mysql://localhost:3306/jwt_demo?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver #com.mysql.jdbc.Driver
+  #    maxActive: 20
+  #    initialSize: 1
+  #    maxWait: 60000
+  #    minIdle: 1
+
+#Mybatis实体类配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+#日志输出路径
+logging:
+  path: F:/log/
+  file: soj.log
+
+token:
+  config:
+    #客户端标识，类比为token的用户名，我写的是项目名
+    clientId: SOJ_DEMO
+    #客户端安全码，类比为token的密码，我写的是假邮箱
+    secret: soj@123
+    #表示授权模式: password(密码模式),authorization_code(授权码模式)
+    grantTypes: password
+    #表示权限范围，该属性为可选项
+    scopes: all
+    #令牌的有效时长，此处为180s/60，时长为2分钟 设置短一点是为了测试刷新token
+    accessTokenValidity: 120
+    #刷新令牌的有效时长
+    refreshTokenValidity: 36000
+    #资源ID号
+  resourceId: SOJ_DEMO
+  #token签名的key,用于token对称加解密
+  signingKey: SOJ_SYMMETRY
+  #设置刷新令牌机制.true(重复使用:更新access_token时长后，refresh_toke时长不更新)。false(与true相反)
+  isRefreshToken: false
